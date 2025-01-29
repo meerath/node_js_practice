@@ -1,0 +1,21 @@
+{
+  "name": "node_js_practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongo": "^0.1.0",
+    "mongodb": "4.0",
+    "mongoose": "^8.3.4"
+  }
+}

@@ -91,7 +91,7 @@ app.get("/northwind/:entity", async (req, res) => {
        const q= {"EmployeeID" : parseInt(empId)};
        const db= mongoose.connection;
        try{
-        const results= await db.collection("Employees").find(q).toArray;
+        const results= await db.collection("Employees").find(q).toArray();
         res.status(200).json(results)
        } catch(err){
         res.status(500).json({msg: "Failed to get data", error: err.message});

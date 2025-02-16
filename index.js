@@ -3,13 +3,19 @@ let express = require("express");
 let mongoose = require("mongoose");
 let axios = require("axios");
 let bcrypt = require("bcrypt");
+let cors = require("cors");
 
 dotenv.config();
 
 let app = express();
 let port = process.env.PORT || 9800;
 let dbUri = process.env.MongoLive;
+
+// Middleware to parse JSON request bodies
 app.use(express.json());
+
+// Enable CORS for all routes
+app.use(cors());
 
 const studentSchema = new mongoose.Schema({
   name: {

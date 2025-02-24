@@ -32,6 +32,29 @@ const studentSchema = new mongoose.Schema({
   },
 });
 
+
+const notificationSchema = new mongoose.Schema({
+  postedBy: {
+    type: String,
+    required: true,
+  },
+  postedOn: {
+    type: Date,
+    required: true,
+  },
+  paraBody: {
+    type: String,
+    required: true,
+  },
+  documents: {
+    type: [String], // Assuming documents is an array of strings (URLs or file paths)
+    required: true,
+  },
+});
+
+const Notification = mongoose.model('Notification', notificationSchema);
+
+module.exports = Notification;
 // Specify the custom collection name 'student'
 const student = mongoose.model("student", studentSchema, "student");
 
@@ -118,6 +141,22 @@ app.post("/addUser", async (req, res) => {
   }
 });
 
+app.post('/addNotification', async (req, res) => {
+  const body = req.body;
+  console.log(body);
+  try {
+    const newNotification = await Notification.create({
+      postedBy: body.postedBy,
+      postedOn: body.postedOn,
+      paraBody: body.paraBody,
+      documents: body.documents
+    });
+    return res.status(201).json(newNotification);
+  } catch (err) {
+    return res.status(500).json({ msg: 'Failed to post data', error: err.message });
+  }
+});
+
 app.get("/:name", async (req, res) => {
   const name = req.params.name;
   const query = { name: name };
@@ -126,6 +165,15 @@ app.get("/:name", async (req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     return res.status(500).json({ msg: "Failed to get data", error: err.message });
+  }
+});
+
+app.get('/getNotifications', async (req, res) => {
+  try {
+    const notifications = await Notification.find();
+    return res.status(200).json(notifications);
+  } catch (err) {
+    return res.status(500).json({ msg: 'Failed to get notifications', error: err.message });
   }
 });
 
